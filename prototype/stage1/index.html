@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="../../css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../../css/bootstrap/style.css">
     <!-- Change reference of css for final -->
-    <link rel="stylesheet" href="prototype/stage1/main.css">
+    <link rel="stylesheet" href="js/main.css">
     <script src="js/bootstrap/bootstrap.js"></script>
     <!-- Change reference of js for final -->
-    <script src="prototype/stage1/main.js"></script>
+    <script src="js/main.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   </head>
   <body>
@@ -40,7 +40,31 @@
       <!-- SVG area -->
       <div class="row">
         <div class="col-md-12">
-          <img class="img-responsive" src="http://placehold.it/1200x500" alt="Logo" />
+          <div align="center"> <!-- An inexpensive way to center everything. -->
+            <div style=" margin-bottom: 8px;">
+              <button id="startButton" type="button" onclick="startAnim();">
+                Start Animation
+              </button>
+            </div>
+            <svg id="svgElement" width="800px" height="800px" viewBox="0 0 800 800"> <!-- Give the svg element a name so that we can easily access it via JavaScript. -->
+              <rect x="0" y="0" width="100%" height="100%" rx="16" ry="16"
+                    style="fill: none; stroke: black; stroke-dasharray: 10, 5;" />
+
+              <defs> <!-- Do not render the gear template, just define it. -->
+                <g id="gearTemplate"> <!-- Give this group of graphic elements a name so that it can be "called" from the <use> element. -->
+                  <circle cx="0" cy="0" r="150" style="stroke: black;" />
+                  <line x1="0" y1="-150" x2="0" y2="150" style="stroke: white;"/> <!-- From top to bottom, draw the vertical wheel "spoke". -->
+                  <line x1="-150" y1="0" x2="0" y2="0" style="stroke: white;"/> <!-- Draw left half of the horizontal "spoke". -->
+                  <line x1="0" y1="0" x2="150" y2="0" style="stroke: darkGreen;"/> <!-- Draw right half of the horizontal "spoke". -->
+                </g>
+              </defs>
+
+              <g transform="translate(400, 400)"> <!-- Create a Cartesian coordinate system (with the y-axis flipped) for the animated gears. That is, place the origin at the center of the 800 x 800 SVG viewport: -->
+                <use id="gear0" x="-150" y="0" xlink:href="#gearTemplate" style="fill: orange;" /> <!-- Use the previously defined gear template and position it appropriately. -->
+                <use id="gear1" x="150" y="0" xlink:href="#gearTemplate" style="fill: mediumPurple;" /> <!-- Same as the previous line but give this circle a different color. -->
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
 

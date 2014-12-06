@@ -18,3 +18,8 @@
 .nav-top {
   margin-top: 50px
 }
+
+html, body, #drawing {
+    margin: 0;
+    height: 100%;
+}
