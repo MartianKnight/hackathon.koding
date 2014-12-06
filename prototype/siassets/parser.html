@@ -1,0 +1,34 @@
+<!doctype html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<html>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<script>
+			var fujitaScaleCounts = [0, 0, 0, 0, 0, 0];
+			var sum = 0;
+			var count = 0;
+			$.getJSON( "\oklahoma.json", function( data ) {
+				for(var i in data)
+				{
+					if(!isNaN(data[i].Fujita))
+					{
+						for(var j=0; j<=5; j++)
+						{
+							if(Number(data[i].Fujita) == j)
+								fujitaScaleCounts[j]++;
+						}
+						sum += Number(data[i].Fujita);
+						count++;
+					}
+				}
+				console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
+			});
+
+			//console.log(getJSON());
+		</script>
+	</body>
+</html>
