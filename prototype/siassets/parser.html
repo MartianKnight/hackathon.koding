@@ -8,26 +8,27 @@
 
 	<body>
 		<script>
-			var fujitaScaleCounts = [0, 0, 0, 0, 0, 0];
-			var sum = 0;
-			var count = 0;
-			$.getJSON( "\oklahoma.json", function( data ) {
-				for(var i in data)
-				{
-					if(!isNaN(data[i].Fujita))
+			function GetAverage(stateName)
+				var fujitaScaleCounts = [0, 0, 0, 0, 0, 0];
+				var sum = 0;
+				var count = 0;
+				$.getJSON( "\\" + stateName + "_tornado.json", function( data ) {
+					for(var i in data)
 					{
-						for(var j=0; j<=5; j++)
+						if(!isNaN(data[i].Fujita))
 						{
-							if(Number(data[i].Fujita) == j)
-								fujitaScaleCounts[j]++;
+							for(var j=0; j<=5; j++)
+							{
+								if(Number(data[i].Fujita) == j)
+									fujitaScaleCounts[j]++;
+							}
+							sum += Number(data[i].Fujita);
+							count++;
 						}
-						sum += Number(data[i].Fujita);
-						count++;
 					}
-				}
-				console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
-			});
-
+					console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
+				});
+			}
 			//console.log(getJSON());
 		</script>
 	</body>
