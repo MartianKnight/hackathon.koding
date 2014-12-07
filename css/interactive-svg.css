@@ -67,7 +67,7 @@ aside {
   100% { opacity: 0; }
 }
 
-#test1 {
+#test123 {
   transform: translateY(150px);
   animation: popup 10s 6.5s ease infinite;
 }
@@ -84,4 +84,21 @@ aside {
   100% {
     transform: translateY(150px);
   }
+}
+
+/* hover final state */
+#testImage:hover {
+   -webkit-transform: translate(540px,-200px);
+   -moz-transform: translate(540px,-200px);
+   -o-transform: translate(540px,-200px);
+   -ms-transform: translate(540px,-200px);
+   transform: translate(540px,-200px);
+}
+
+#testImate:hover {
+  -webkit-transform: rotate(70deg);
+  -moz-transform: rotate(70deg);
+  -o-transform: rotate(70deg);
+  -ms-transform: rotate(70deg);
+  transform: rotate(70deg);
 }
