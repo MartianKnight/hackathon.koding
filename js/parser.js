@@ -9,29 +9,56 @@ function GetScale(stateName) {
 
 	var disaster = potentialDisasters.split(" ");
 
-	console.log(disaster);
-	console.log(potentialDisasters);
+	console.log("var disaster:" + disaster);
+	console.log("var potentialDisasters:" + potentialDisasters);
+	console.log("var disaster.length:" + disaster.length);
 
 	for(var x = 0; x < disaster.length; x++)
 	{
 		console.log(disaster[x]);
 		//update with url
-		$.getJSON("\\" + stateName + "_" + x + ".json", function( data ) {
+
+		// Assign handlers immediately after making the request,
+// and remember the jqxhr object for this request
+
+// Perform other work here ...
+// Set another completion function for the request above
+
+		var jsonString = "data/" + stateName + "_" + disaster[x] + ".json";
+		console.log("var jsonString: " + jsonString );
+
+		var test = $.getJSON(jsonString, function( data ) {
+			console.log( "success" );
 			for(var i in data)
 			{
-				if(!isNaN(data[i].Fujita))
-				{
-					for(var j=0; j<=5; j++)
+					if(!isNaN(data[i].Fujita))
 					{
-						if(Number(data[i].Fujita) == j)
-							fujitaScaleCounts[j]++;
+						for(var j=0; j<=5; j++)
+						{
+							if(Number(data[i].Fujita) == j)
+								fujitaScaleCounts[j]++;
+						}
+						sum += Number(data[i].Fujita);
+						count++;
 					}
-					sum += Number(data[i].Fujita);
-					count++;
-				}
-				console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
+					console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
 			}
+		})
+			.done(function() {
+			console.log( "second success" );
+			})
+			.fail(function() {
+			console.log( "error" );
+
+			})
+			.always(function() {
+			console.log( "complete" );
+			});
+
+		test.complete(function() {
+		console.log( "second complete" + JSON.stringify(test) );
 		});
+
 	}
 }
 
