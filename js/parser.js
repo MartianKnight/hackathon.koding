@@ -21,6 +21,11 @@ var fileList = {
 			"disasters": ["quakes"],
 			"format": "json",
 		},
+    {
+      "state": "hi",
+      "disasters": ["volcano"],
+      "format": "json",
+    },
 		{
 			"state": "ia",
 			"disasters": ["tornado"],
@@ -46,6 +51,11 @@ var fileList = {
 			"disasters": ["tornado"],
 			"format": "json",
 		},
+    {
+      "state": "ak",
+      "disasters": ["volcano"],
+      "format": "json",
+    },
   ]
 }
 
@@ -129,8 +139,8 @@ function getScale() {
 
 /*
  * NOTE: The following have not been tested. Use at your own peril.
- * These functions require the JSON array passed through them. 
- * So, while reading a JSON file, pass through what you now have 
+ * These functions require the JSON array passed through them.
+ * So, while reading a JSON file, pass through what you now have
  * named the "data" variable into these functions.
  * --Daniel
  */
@@ -140,18 +150,18 @@ function getTornadoCounter(tornadoJson){
 	//TODO: Return counts in dictionary/json format
 	//TODO: consider renaming variables
 	//TODO: test
-	
+
 	// Initializes Fujita scale counts
 	// The 0th element of the array corresponds to the amount of
 	// times that tornadoes of Fujita scale 0 appear in the dataset, etc.
 	var fujitaCounts = [0, 0, 0, 0, 0, 0];
-	
+
 	for(tornadoInstance in tornadoJson) {
 	//for(var tornadoId = 0; tornadoId < tornadoJson.length; tornadoId++) {
 
 		for(var fujitaValue = 0; fujitaValue <= fujitaCounts.length; fujitaValue++) {
 		// loop through all possible Fujita Scale values
-		
+
 			if(Number(tornadoJson[tornadoInstance].Fujita) === fujitaValue) {
 			// Add the Fujita Scale value from this instance to count array
 				fujitaCounts[fujitaValue]++;
@@ -174,19 +184,19 @@ function getVolcanoCounter(volcanoJson){
 	//TODO: consider renaming variables
 	//TODO: test
 	var veiCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-	
+
 	for(volcanoInstance in volcanoJson) {
 
 		for(var veiValue = 0; veiValue <= veiCounts.length; veiValue++) {
 		// loop through all possible VEI Scale values
 
-			
+
 			if(Number(volcanoJson[volcanoInstance].VEI) === veiValue) {
 			// Add the VEI Scale value from this instance to count array
 
 				veiCounts[veiValue]++;
 			}
-		
+
 		}
 	}
 
@@ -194,7 +204,7 @@ function getVolcanoCounter(volcanoJson){
 }
 
 function getEarthquakeCounter(quakeJson){
-	// The 0th element of the array corresponds to a magnitude of 4-4.9 on 
+	// The 0th element of the array corresponds to a magnitude of 4-4.9 on
 	// the Richter Scale, etc.
 	// TODO: Check (if statement) that EQ_PRIMARY attribute exists
 	// TODO: Return counts in dictionary/json format
@@ -207,7 +217,7 @@ function getEarthquakeCounter(quakeJson){
 
 		for(var quakeValue = 4; quakeValue <= magnitudeCounts.length + 4; quakeValue++) {
 		// loop through all possible Richter Scale values
-			
+
 			if(Math.floor(Number(quakeJson[quakeInstance].EQ_PRIMARY)) === quakeValue) {
 			// Adds the Richter Scale value from this instance to count array
 				magnitudeCounts[quakeValue - 4]++;
@@ -216,7 +226,7 @@ function getEarthquakeCounter(quakeJson){
 	}
 
 	return magnitudeCounts;
-	
+
 }
 
 function getHurricaneCounter(hurricaneJson){
