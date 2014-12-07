@@ -1,5 +1,3 @@
-GetScale("ok");
-
 // List of static files that we pull json
 var fileList = {
   "files": [
@@ -67,10 +65,12 @@ fileList.format = function() {
 fileList.format();
 console.log("File List: " + fileList.format());
 
+GetScale("ok");
+
 // Code
 var disasters = function() {
 	for(var file in fileList.format()) {
-		
+
 	}
 }
 
