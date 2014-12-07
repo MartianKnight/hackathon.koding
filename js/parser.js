@@ -1,5 +1,95 @@
 GetScale("ok");
 
+// List of static files that we pull json
+var fileList = {
+  "files": [
+    {
+      "state": "al",
+      "disasters": ["hurricane"],
+      "format": "json",
+    },
+    {
+      "state": "ca",
+			"disasters": ["quakes"],
+			"format": "json",
+    },
+		{
+			"state": "fl",
+			"disasters": ["hurricane"],
+			"format": "json",
+		},
+		{
+			"state": "hi",
+			"disasters": ["quakes"],
+			"format": "json",
+		},
+		{
+			"state": "ia",
+			"disasters": ["tornado"],
+			"format": "json",
+		},
+		{
+			"state": "ks",
+			"disasters": ["tornado"],
+			"format": "json",
+		},
+		{
+			"state": "nc",
+			"disasters": ["hurricane"],
+			"format": "json",
+		},
+		{
+			"state": "nv",
+			"disasters": ["quakes"],
+			"format": "json",
+		},
+		{
+			"state": "ok",
+			"disasters": ["tornado"],
+			"format": "json",
+		},
+  ]
+}
+
+fileList.format = function() {
+	var listOfFileNames = new Array();
+	// Walk into json
+  for (file in fileList.files) {
+    var state = fileList.files[file].state;
+		var disasters = fileList.files[file].disasters[0];
+		var format = fileList.files[file].format;
+		var fileName = state + "_" + disasters + "." + format;
+		listOfFileNames.push(fileName);
+  }
+	return listOfFileNames;
+}
+
+fileList.format();
+console.log("File List: " + fileList.format());
+
+// Code
+var disasters = function() {
+	for(var file in fileList.format()) {
+		
+	}
+}
+
+disasters.volcano = function() {
+
+}
+
+disasters.earthquake = function() {
+
+}
+
+disasters.volcano = function() {
+
+}
+
+disasters.tornado = function() {
+
+}
+
 function GetScale(stateName) {
 	var fujitaScaleCounts = [0, 0, 0, 0, 0, 0];
 	var sum = 0;
@@ -41,7 +131,7 @@ function GetScale(stateName) {
 						sum += Number(data[i].Fujita);
 						count++;
 					}
-					console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
+					//console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
 			}
 		})
 			.done(function() {
@@ -61,7 +151,6 @@ function GetScale(stateName) {
 
 	}
 }
-
 
 function GetDisaster(stateName)
 {
@@ -88,5 +177,11 @@ function GetDisaster(stateName)
 	//return biCounter;
 	return "tornado";
 }
+
+// File to parse file names
+
+// Store names
+
+//
 
 //console.log(getJSON());
