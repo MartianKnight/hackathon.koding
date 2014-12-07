@@ -78,7 +78,6 @@ console.log("File List: " + fileList.format());
 getScale();
 
 function getScale() {
-	var fujitaScaleCounts = [0, 0, 0, 0, 0, 0];
 	var sum = 0;
 	var count = 0;
 
@@ -86,76 +85,73 @@ function getScale() {
 
 	var disaster = fileList.format(); //potentialDisasters.split(" ");
 
-	console.log(disaster);
+	//console.log(disaster);
 
 	for(var disasterNumber = 0; disasterNumber < disaster.length; disasterNumber++)
 	{
 		//update with url
 		var jsonString = "data/" + disaster[disasterNumber];
 		console.log("var jsonString: " + jsonString );
+		//console.log("bfr json disas num: " + disasterNumber);
 
-		var test = $.getJSON(jsonString, function(data) {
-			console.log("success");
+		//var test = 
+		(function(disasterNumber) {$.getJSON(jsonString, function(data) {
+				console.log("success");
 
-			console.log("1" + disaster[0].substring(3, disaster[0].length - 5));
+				console.log("switch " + disaster[disasterNumber].substring(3, disaster[disasterNumber].length - 5));
+				console.log("disas num: " + disasterNumber)
 
-			for(var i = 0; i < disaster.length; i++)
-			{
 				//TODO: fix to see if there's a contains function in javascript
-				switch(disaster[i].substring(3, disaster[i].length - 5)) {
+				switch(disaster[disasterNumber].substring(3, disaster[disasterNumber].length - 5)) {
 					case "tornado":
-						console.log(disaster[i] + getTornadoCounter(data));
+						console.log(disaster[disasterNumber] + getTornadoCounter(data));
 						break;
 					case "hurricane":
-						console.log(disaster[i] + getHurricaneCounter(data));
+						console.log(disaster[disasterNumber] + getHurricaneCounter(data));
 						break;
 					case "quakes":
-						console.log(disaster[i] + getEarthquakeCounter(data));
+						console.log(disaster[disasterNumber] + getEarthquakeCounter(data));
 						break;
 					case "volcano":
-						console.log(disaster[i] + getVolcanoCounter(data));
+						console.log(disaster[disasterNumber] + getVolcanoCounter(data));
 						break;
 					default:
-						console.log("didn't get disaster" + disaster[i]);
+						console.log("didn't get disaster" + disaster[disasterNumber]);
 				}
-			}
-		})
-			.done(function() {
-				console.log( "second success" );
 			})
-			.fail(function() {
-				console.log( "error" );
-			})
-			.always(function() {
-				console.log( "complete" );
-			});
+				.done(function() {
+					console.log( "second success" );
+				})
+				.fail(function() {
+					console.log( "error" );
+				})
+				.always(function() {
+					console.log( "complete" );
+				});
 
-			test.complete(function() {
-				console.log( "second complete");// + JSON.stringify(test) );
-		});
-
+				/*test.complete(function() {
+					console.log( "second complete");// + JSON.stringify(test) );
+			});*/
+		})(disasterNumber);
 	}
 }
 
-/*
- * NOTE: The following have not been tested. Use at your own peril.
- * These functions require the JSON array passed through them.
- * So, while reading a JSON file, pass through what you now have
- * named the "data" variable into these functions.
- * --Daniel
- */
-
 function getTornadoCounter(tornadoJson){
-	//TODO: Check (if statement) that tornadoInstance has Fujita attribute
 	//TODO: Return counts in dictionary/json format
-	//TODO: consider renaming variables
-	//TODO: test
 
 	// Initializes Fujita scale counts
 	// The 0th element of the array corresponds to the amount of
 	// times that tornadoes of Fujita scale 0 appear in the dataset, etc.
-	var fujitaCounts = [0, 0, 0, 0, 0, 0];
-
+	
+	//var fujitaCounts = [0, 0, 0, 0, 0, 0];
+	var fujitaCounts = {
+		"Fujita0":0,
+		"Fujita1":0,
+		"Fujita2":0,
+		"Fujita3":0,
+		"Fujita4":0,
+		"Fujita5":0
+	}
 	for(tornadoInstance in tornadoJson) {
 	//for(var tornadoId = 0; tornadoId < tornadoJson.length; tornadoId++) {
 
@@ -164,13 +160,12 @@ function getTornadoCounter(tornadoJson){
 
 			if(Number(tornadoJson[tornadoInstance].Fujita) === fujitaValue) {
 			// Add the Fujita Scale value from this instance to count array
-				fujitaCounts[fujitaValue]++;
+				//fujitaCounts[fujitaValue]++;
+				console.log("dan the man: " + fujitaCounts["Fujita" + fujitaValue]);//= fujitaCounts["Fujita" + fujitaValue] + 1);
 			}
 		}
-		// Possible alternative way, may be less readable:
-		// fujitaCounts[Number(tornadoJson[tornadoCounter].Fujita)]++
 	}
-
+	
 	return fujitaCounts;
 }
 
@@ -179,10 +174,7 @@ function getVolcanoCounter(volcanoJson){
 	// The 0th element of the array corresponds to the amount of
 	// times that volcanos of VEI scale 0 appear in the dataset, etc.
 
-	//TODO: Check (if statement) that volcanoJson has VEI attribute
 	//TODO: Return counts in dictinary/json format
-	//TODO: consider renaming variables
-	//TODO: test
 	var veiCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 	for(volcanoInstance in volcanoJson) {
