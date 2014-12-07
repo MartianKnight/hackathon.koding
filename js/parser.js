@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // List of static files that we pull json
 var fileList = {
   "files": [
@@ -66,44 +65,50 @@ fileList.format = function() {
 fileList.format();
 console.log("File List: " + fileList.format());
 
-getScale("fl");
+getScale();
 
-function getScale(stateName) {
+function getScale() {
 	var fujitaScaleCounts = [0, 0, 0, 0, 0, 0];
 	var sum = 0;
 	var count = 0;
 
-	potentialDisasters = getDisaster(stateName);
+	//potentialDisasters = fileName.format();//getDisaster(stateName);
 
-	var disaster = potentialDisasters.split(" ");
+	var disaster = fileList.format(); //potentialDisasters.split(" ");
+
+	console.log(disaster);
 
 	for(var disasterNumber = 0; disasterNumber < disaster.length; disasterNumber++)
 	{
 		//update with url
-		var jsonString = "data/" + stateName + "_" + disaster[disasterNumber] + ".json";
+		var jsonString = "data/" + disaster[disasterNumber];
 		console.log("var jsonString: " + jsonString );
 
 		var test = $.getJSON(jsonString, function(data) {
-			console.log( "success" );
+			console.log("success");
 
-			for(var i in data)
+			console.log("1" + disaster[0].substring(3, disaster[0].length - 5));
+
+			for(var i = 0; i < disaster.length; i++)
 			{
-					if(!isNaN(data[i].Fujita))
-					{
-						for(var j=0; j<=5; j++)
-						{
-							if(Number(data[i].Fujita) == j)
-								fujitaScaleCounts[j]++;
-						}
-						sum += Number(data[i].Fujita);
-						count++;
-					}
-					console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
+				//TODO: fix to see if there's a contains function in javascript
+				switch(disaster[i].substring(3, disaster[i].length - 5)) {
+					case "tornado":
+						console.log(disaster[i] + getTornadoCounter(data));
+						break;
+					case "hurricane":
+						console.log(disaster[i] + getHurricaneCounter(data));
+						break;
+					case "quakes":
+						console.log(disaster[i] + getEarthquakeCounter(data));
+						break;
+					case "volcano":
+						console.log(disaster[i] + getVolcanoCounter(data));
+						break;
+					default:
+						console.log("didn't get disaster" + disaster[i]);
+				}
 			}
-
-			GetCounter(data, disaster, disasterNumber);
-
-			//console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
 		})
 			.done(function() {
 				console.log( "second success" );
@@ -121,68 +126,6 @@ function getScale(stateName) {
 
 	}
 }
-
-/*function getTornadoCounter(data, disaster, disasterNumber)
-{
-	console.log(disaster[disasterNumber -1]);
-
-	for(var i in data)
-	{
-		if(disaster[disasterNumber - 1] === "tornado" && (!isNaN(data[i].Fujita)))//if((disaster[disasterNumber - 1] === disasterType[type]) && (!isNaN(data[i].Fujita)))
-		{
-			for(var j=0; j<=5; j++)
-			{
-				if(Number(data[i].Fujita) == j)
-					fujitaScaleCounts[j]++;
-			}
-			/*sum += Number(data[i].Fujita);
-			count++;*/
-		}
-
-		/*else if((disaster[disasterNumber - 1] === "hurricane") && (data[i].Max_Classification != null))
-		{
-			console.log(data[i].Max_Classification);
-			for(var j=0; j<=5; j++)
-			{
-				if(Number(data[i].Max_Classification) == j)
-					fujitaScaleCounts[j]++;
-			}
-			/*sum += Number(data[i].Fujita);
-			count++;
-		}
-	}
-}
-*/
-
-function getDisaster(stateName)
-{
-	var disaster = ["hurricane", "tornado", "earthquake", "volcano"];
-	var disasterState;
-	var biCounter = 0;
-
-	for(var i in disaster)
-	{
-		//update with filename
-		//TODO: find out how to check if file is null
-		/*if(stateName + "_" + i + ".json" != null)
-		{
-			if(i === "hurricane")
-				biCounter += " hurricane";
-			else if(i === "tornado")
-				biCounter += " tornado";
-			else if(i === "earthquake")
-				biCounter += " earthquake";
-			else if(i === "volcano")
-				biCounter += " volcano";
-		}*/
-		
-	}
-	//return biCounter;
-	return "hurricane";
-}
-
-
-
 
 /*
  * NOTE: The following have not been tested. Use at your own peril.
@@ -213,9 +156,7 @@ function getTornadoCounter(tornadoJson){
 			// Add the Fujita Scale value from this instance to count array
 				fujitaCounts[fujitaValue]++;
 			}
-		
 		}
-	
 		// Possible alternative way, may be less readable:
 		// fujitaCounts[Number(tornadoJson[tornadoCounter].Fujita)]++
 	}
@@ -264,19 +205,14 @@ function getEarthquakeCounter(quakeJson){
 	for(quakeInstance in quakeJson) {
 	//for(var quakeId = 0; quakeId <= quakeJson; quakeId++){
 
-		for(var quakeValue = 0; quakeValue <= quakeCounts.length; quakeValue++) {
+		for(var quakeValue = 4; quakeValue <= magnitudeCounts.length + 4; quakeValue++) {
 		// loop through all possible Richter Scale values
-
 			
-			if(Math.floor(Number(volcanoJson[volcanoInstance].EQ_PRIMARY)) === veiValue) {
-			// Add the Richter Scale value from this instance to count array
-
-				veiCounts[veiValue]++;
+			if(Math.floor(Number(quakeJson[quakeInstance].EQ_PRIMARY)) === quakeValue) {
+			// Adds the Richter Scale value from this instance to count array
+				magnitudeCounts[quakeValue - 4]++;
 			}
-		
 		}
-		// Possible alternative way, may be less readable:
-		// magnitudeCounts[Number(quakeJson[quakeId].EQ_PRIMARY)]++
 	}
 
 	return magnitudeCounts;
@@ -294,40 +230,50 @@ function getHurricaneCounter(hurricaneJson){
 	var category3Count = 0;
 	var category4Count = 0;
 	var category5Count = 0;
+	var subTropicalStormCount = 0;
 
 	// count all possible hurricane categories as they appear in the .json files
 	for(hurricane_instance in hurricaneJson) {
-		
-		switch(hurricane_instance.Max_classification) {
-
+		//TODO: surround with try catch
+		if(!hurricaneJson[hurricane_instance]["Max_Classification"])
+		{
+			var Max_Classification = "Max Classification";
+		}
+		else
+			var Max_Classification = "Max_Classification";
+		var classificationMinusSpace = hurricaneJson[hurricane_instance][Max_Classification].replace(/\s+/g, '');
+		switch(classificationMinusSpace) {//hurricaneJson[hurricane_instance].Max_Classification) {
 			case "TropicalLow":
 				tropicalLowCount++;
 				break;
-			case "Tropical Storm":
+			case "TropicalStorm":
 				tropicalStormCount++;
 				break;
-			case "Tropical Depression":
+			case "TropicalDepression":
 				tropicalDepressionCount++;
 				break;
-			case "Category 1":
+			case "SubTropicalStorm":
+				subTropicalStormCount++;
+				break;
+			case "Category1":
 				category1Count++;
 				break;
-			case "Category 2":
+			case "Category2":
 				category2Count++;
 				break;
-			case "Category 3":
+			case "Category3":
 				category3Count++;
 				break;
-			case "Category 4":
+			case "Category4":
 				category4Count++;
 				break;
-			case "Category 5":
+			case "Category5":
 				category5Count++;
 				break;
-			case default:
-				console.log("ERROR: Category " + hurricane_instance.Max_classification + " not expected.");
+			default:
+				console.log("ERROR: Category " + hurricaneJson[hurricane_instance].Max_Classification + " not expected.");
+			}
 		}
-	}
 
-	return [tropicalLowCount, tropicalStormCount, tropicalDepressionCount, category1Count, category2Count, category3Count, category4Count, category5Count];
+	return [tropicalLowCount, subTropicalStormCount, tropicalStormCount, tropicalDepressionCount, category1Count, category2Count, category3Count, category4Count, category5Count];
 }
