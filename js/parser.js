@@ -68,40 +68,12 @@ console.log("File List: " + fileList.format());
 
 getScale("fl");
 
-// Code
-var disasters = function() {
-	for(var file in fileList.format()) {
-
-	}
-}
-
-disasters.volcano = function() {
-
-}
-
-disasters.earthquake = function() {
-
-}
-
-disasters.volcano = function() {
-
-}
-
-disasters.tornado = function() {
-
-}
-
-function GetScale(stateName) {
-||||||| merged common ancestors
-function GetScale(stateName) {
-=======
 function getScale(stateName) {
->>>>>>> 0df0e118ca098643653450552db97d3873d55760
 	var fujitaScaleCounts = [0, 0, 0, 0, 0, 0];
 	var sum = 0;
 	var count = 0;
 
-	potentialDisasters = GetDisaster(stateName);
+	potentialDisasters = getDisaster(stateName);
 
 	var disaster = potentialDisasters.split(" ");
 
@@ -113,22 +85,7 @@ function getScale(stateName) {
 
 		var test = $.getJSON(jsonString, function(data) {
 			console.log( "success" );
-<<<<<<< HEAD
-			for(var i in data)
-			{
-					if(!isNaN(data[i].Fujita))
-					{
-						for(var j=0; j<=5; j++)
-						{
-							if(Number(data[i].Fujita) == j)
-								fujitaScaleCounts[j]++;
-						}
-						sum += Number(data[i].Fujita);
-						count++;
-					}
-					//console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
-			}
-||||||| merged common ancestors
+
 			for(var i in data)
 			{
 					if(!isNaN(data[i].Fujita))
@@ -143,12 +100,10 @@ function getScale(stateName) {
 					}
 					console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
 			}
-=======
 
 			GetCounter(data, disaster, disasterNumber);
 
 			//console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
->>>>>>> 0df0e118ca098643653450552db97d3873d55760
 		})
 			.done(function() {
 				console.log( "second success" );
@@ -167,10 +122,6 @@ function getScale(stateName) {
 	}
 }
 
-<<<<<<< HEAD
-||||||| merged common ancestors
-
-=======
 function getTornadoCounter(data, disaster, disasterNumber)
 {
 	console.log(disaster[disasterNumber -1]);
@@ -202,8 +153,7 @@ function getTornadoCounter(data, disaster, disasterNumber)
 	}
 }
 
->>>>>>> 0df0e118ca098643653450552db97d3873d55760
-function GetDisaster(stateName)
+function getDisaster(stateName)
 {
 	var disaster = ["hurricane", "tornado", "earthquake", "volcano"];
 	var disasterState;
@@ -224,21 +174,8 @@ function GetDisaster(stateName)
 			else if(i === "volcano")
 				biCounter += " volcano";
 		}*/
+		
 	}
 	//return biCounter;
 	return "hurricane";
 }
-
-<<<<<<< HEAD
-// File to parse file names
-
-// Store names
-
-//
-
-//console.log(getJSON());
-||||||| merged common ancestors
-//console.log(getJSON());
-=======
-//console.log(getJSON());
->>>>>>> 0df0e118ca098643653450552db97d3873d55760
