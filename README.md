@@ -25,3 +25,6 @@ http://nc-climate.ncsu.edu/climate/hurricanes/landfalling.php
 
 Earthquake information gathered at:
 http://ngdc.noaa.gov/hazard/earthqk.shtml
+
+Volcano information gathered at:
+http://www.ngdc.noaa.gov/hazard/volcano.shtml
