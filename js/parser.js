@@ -154,18 +154,22 @@ function getTornadoCounter(tornadoJson){
 	}
 	for(tornadoInstance in tornadoJson) {
 	//for(var tornadoId = 0; tornadoId < tornadoJson.length; tornadoId++) {
-
-		for(var fujitaValue = 0; fujitaValue <= fujitaCounts.length; fujitaValue++) {
+	//console.log("In first for loop ");
+		for(var fujitaValue = 0; fujitaValue <= 6; fujitaValue++) {
+		
 		// loop through all possible Fujita Scale values
-
+		//console.log("In 2nd loop: ");
 			if(Number(tornadoJson[tornadoInstance].Fujita) === fujitaValue) {
-			// Add the Fujita Scale value from this instance to count array
+			
+				// Add the Fujita Scale value from this instance to count array
 				//fujitaCounts[fujitaValue]++;
-				console.log("dan the man: " + fujitaCounts["Fujita" + fujitaValue]);//= fujitaCounts["Fujita" + fujitaValue] + 1);
+				fujitaCounts["Fujita" + fujitaValue]++;
+				//console.log("Fujita" + fujitaValue);
+				//console.log("dan the man: " + fujitaCounts["Fujita" + fujitaValue]);//= fujitaCounts["Fujita" + fujitaValue] + 1);
 			}
 		}
 	}
-	
+	//console.log(fujitaCounts["Fujita0"]);
 	return fujitaCounts;
 }
 
