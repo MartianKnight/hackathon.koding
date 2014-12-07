@@ -10,19 +10,32 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap/style.css">
     <!-- Change reference of css for final -->
-    <link rel="stylesheet" href="prototype/stage1/main.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="js/bootstrap/bootstrap.js"></script>
     <!-- Change reference of js for final -->
     <script src="prototype/stage1/main.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/raphael.js"></script>
+    <script src="js/topChart.js"></script>
+    <script src="js/popup.js"></script>
+
+
   </head>
   <body>
+
+
+
     <div class="container">
 
+
+
       <!-- Graph -->
-      <div class="row nav-top">
+      <div class="row ">
         <div class="col-md-12">
-          <img class="img-responsive" src="http://placehold.it/1200x50" alt="Logo" />
+          <div id="topChart">
+
+          </div>
         </div>
       </div>
 
@@ -40,7 +53,7 @@
       <!-- SVG area -->
       <div class="row">
         <div class="col-md-12">
-          <img class="img-responsive" src="http://placehold.it/1200x500" alt="Logo" />
+          <img class="img-responsive" src="images/svg/earthquake_animation.svg" alt="Logo" />
         </div>
       </div>
 

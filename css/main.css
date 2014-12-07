@@ -2,3 +2,14 @@
 .nav-top {
   margin-top: 50px
 }
+
+/* Edit for top chart */
+#topChart {
+    /*margin-top: 50px
+    height: 480px;
+    left: 50%;
+    margin: -240px 0 0 -320px;
+    position: absolute;
+    top: 50%;
+    width: 640px;*/
+}
