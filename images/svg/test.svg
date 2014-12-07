@@ -1,3 +1,11 @@
 <svg width="500" height="500">
+<<<<<<< HEAD
   <rect id="rec" x="300" y="100" width="300" height="100" style="fill:lime">
 </svg>
+||||||| merged common ancestors
+  <rect id="rec" x="300" y="100" width="300" height="100" style="fill:lime"> 
+ </svg>
+=======
+  <rect id="rec" x="300" y="100" width="300" height="100" style="fill:lime"> 
+</svg>
+>>>>>>> 7babafa0be11f7a1f63339c932c790686c04270a
