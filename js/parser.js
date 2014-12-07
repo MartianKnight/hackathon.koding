@@ -1,6 +1,6 @@
-GetScale("ok");
+getScale("fl");
 
-function GetScale(stateName) {
+function getScale(stateName) {
 	var fujitaScaleCounts = [0, 0, 0, 0, 0, 0];
 	var sum = 0;
 	var count = 0;
@@ -9,59 +9,66 @@ function GetScale(stateName) {
 
 	var disaster = potentialDisasters.split(" ");
 
-	console.log("var disaster:" + disaster);
-	console.log("var potentialDisasters:" + potentialDisasters);
-	console.log("var disaster.length:" + disaster.length);
-
-	for(var x = 0; x < disaster.length; x++)
+	for(var disasterNumber = 0; disasterNumber < disaster.length; disasterNumber++)
 	{
-		console.log(disaster[x]);
 		//update with url
-
-		// Assign handlers immediately after making the request,
-// and remember the jqxhr object for this request
-
-// Perform other work here ...
-// Set another completion function for the request above
-
-		var jsonString = "data/" + stateName + "_" + disaster[x] + ".json";
+		var jsonString = "data/" + stateName + "_" + disaster[disasterNumber] + ".json";
 		console.log("var jsonString: " + jsonString );
-
-		var test = $.getJSON(jsonString, function( data ) {
+		
+		var test = $.getJSON(jsonString, function(data) {
 			console.log( "success" );
-			for(var i in data)
-			{
-					if(!isNaN(data[i].Fujita))
-					{
-						for(var j=0; j<=5; j++)
-						{
-							if(Number(data[i].Fujita) == j)
-								fujitaScaleCounts[j]++;
-						}
-						sum += Number(data[i].Fujita);
-						count++;
-					}
-					console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
-			}
+
+			GetCounter(data, disaster, disasterNumber);
+
+			//console.log(fujitaScaleCounts + " " + sum/count + " " + sum  + " " + count);
 		})
 			.done(function() {
-			console.log( "second success" );
+				console.log( "second success" );
 			})
 			.fail(function() {
-			console.log( "error" );
-
+				console.log( "error" );
 			})
 			.always(function() {
-			console.log( "complete" );
+				console.log( "complete" );
 			});
 
-		test.complete(function() {
-		console.log( "second complete" + JSON.stringify(test) );
+			test.complete(function() {
+				console.log( "second complete");// + JSON.stringify(test) );
 		});
 
 	}
 }
 
+function getTornadoCounter(data, disaster, disasterNumber)
+{
+	console.log(disaster[disasterNumber -1]);
+
+	for(var i in data)
+	{
+		if(disaster[disasterNumber - 1] === "tornado" && (!isNaN(data[i].Fujita)))//if((disaster[disasterNumber - 1] === disasterType[type]) && (!isNaN(data[i].Fujita)))
+		{
+			for(var j=0; j<=5; j++)
+			{
+				if(Number(data[i].Fujita) == j)
+					fujitaScaleCounts[j]++;
+			}
+			/*sum += Number(data[i].Fujita);
+			count++;*/
+		}
+		
+		/*else if((disaster[disasterNumber - 1] === "hurricane") && (data[i].Max_Classification != null))
+		{
+			console.log(data[i].Max_Classification);
+			for(var j=0; j<=5; j++)
+			{
+				if(Number(data[i].Max_Classification) == j)
+					fujitaScaleCounts[j]++;
+			}
+			/*sum += Number(data[i].Fujita);
+			count++;
+		}*/
+	}
+}
 
 function GetDisaster(stateName)
 {
@@ -86,7 +93,7 @@ function GetDisaster(stateName)
 		}*/
 	}
 	//return biCounter;
-	return "tornado";
+	return "hurricane";
 }
 
 //console.log(getJSON());
